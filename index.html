@@ -484,6 +484,33 @@ frameborder="1"
     }
 
     </script>
+    <input type="number" id="mobileInput"
+       placeholder="Enter number..."
+       style="position: absolute; top: 250px; left: 50%; transform: translateX(-50%);
+              font-size: 24px; padding: 8px; width: 200px; text-align: center;
+              border-radius: 8px; border: 2px solid #888; z-index: 10; display: none;">
+<script>
+  const canvas = document.querySelector("canvas");
+  const input = document.getElementById("mobileInput");
+
+  // When user taps anywhere, show input
+  canvas.addEventListener("touchstart", () => {
+    input.style.display = "block";
+    input.focus();
+  });
+
+  // Send typed value to Pygame
+  input.addEventListener("change", () => {
+    if (window.pygbag && window.pygbag.env) {
+      // Send number to Python variable (simulate keyboard input)
+      let num = parseInt(input.value);
+      window.pygbag.env.input_value = num || 0;
+    }
+    input.blur();
+  });
+</script>
+
 
 </body>
 </html>
+
