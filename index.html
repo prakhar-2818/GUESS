@@ -509,8 +509,30 @@ frameborder="1"
     input.blur();
   });
 </script>
+    <!-- Hidden mobile input field -->
+<input type="number" id="hiddenInput"
+       style="position:absolute;top:-100px;opacity:0;z-index:-1;">
+<script>
+  const input = document.getElementById("hiddenInput");
+  const canvas = document.querySelector("canvas");
+
+  // When tapping the game area -> open keyboard
+  canvas.addEventListener("touchstart", () => {
+    input.style.zIndex = 10;
+    input.focus();
+  });
+
+  // When value changes -> send to Python
+  input.addEventListener("input", () => {
+    if (window.pygbag_env) {
+      window.pygbag_env.input_value = input.value;
+    }
+  });
+</script>
+
 
 
 </body>
 </html>
+
 
