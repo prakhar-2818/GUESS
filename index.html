@@ -529,10 +529,54 @@ frameborder="1"
     }
   });
 </script>
+    <!-- 🔢 Mobile Number Input Interface -->
+<div id="numberBox"
+     style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: rgba(255,255,255,0.9); padding: 15px; border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3); display: flex; gap: 10px;
+            align-items: center; z-index: 9999;">
+
+  <input type="number" id="userNumber"
+         placeholder="Enter your guess..."
+         style="font-size: 22px; padding: 8px 12px; border: 2px solid #444;
+                border-radius: 8px; width: 160px; text-align: center;">
+
+  <button id="sendBtn"
+          style="font-size: 18px; padding: 8px 16px; border: none;
+                 border-radius: 8px; background-color: #28a745; color: white;
+                 font-weight: bold;">Submit</button>
+</div>
+
+<script>
+  const numInput = document.getElementById("userNumber");
+  const sendBtn = document.getElementById("sendBtn");
+
+  // When user taps submit or presses Enter
+  sendBtn.addEventListener("click", sendNumber);
+  numInput.addEventListener("keypress", e => {
+    if (e.key === "Enter") sendNumber();
+  });
+
+  function sendNumber() {
+    const val = parseInt(numInput.value);
+    if (isNaN(val)) {
+      alert("Please enter a valid number!");
+      return;
+    }
+    // Send to Python environment (pygbag)
+    if (window.pygbag && window.pygbag.env) {
+      window.pygbag.env.input_value = val;
+      console.log("📤 Sent to Python:", val);
+    }
+    numInput.value = "";
+  }
+</script>
+
 
 
 
 </body>
 </html>
+
 
 
